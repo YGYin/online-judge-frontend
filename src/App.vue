@@ -1,30 +1,40 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div id="app">
+    <CommonLayout />
+  </div>
 </template>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
+
+<script setup lang="ts">
+import CommonLayout from "@/layouts/CommonLayout.vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { onMounted } from "vue";
+
+// 预留全局项目入口
+const doInit = () => {
+  console.log("YG's Online Judge");
+};
+
+onMounted(() => {
+  doInit();
+});
+
+const router = useRouter();
+const store = useStore();
+
+router.beforeEach((to, from, next) => {
+  // 加入全局路由拦截，判断当前用户是否有权限访问 admin
+  if (to.meta?.access === "isAdmin") {
+    if (store.state.user.loginUser?.userRole !== "admin") {
+      next("/authDenied");
+      return;
+    }
+  }
+  next();
+});
+</script>
