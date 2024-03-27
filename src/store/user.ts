@@ -4,20 +4,29 @@
 // 外层可以传递参数以改变内部状态
 import { StoreOptions } from "vuex";
 import AUTH_ENUM from "@/auth/authEnum";
+import { UserControllerService } from "../../generated";
 
 export default {
   namespaced: true,
   state: () => ({
     loginUser: {
       userName: "Please Login",
-      userRole: AUTH_ENUM.NOT_LOGIN,
     },
   }),
 
   actions: {
     async getLoginUser({ commit, state }, payload) {
-      // 后期加入远程登录
-      commit("updateUser", payload);
+      const result = await UserControllerService.getLoginUserUsingGet();
+      // 通过远程后端获得登录信息
+      // 返回状态码正常
+      if (result.code === 0) {
+        commit("updateUser", result.data);
+      } else {
+        commit("updateUser", {
+          ...state.loginUser,
+          userRole: AUTH_ENUM.NOT_LOGIN,
+        });
+      }
     },
   },
 
