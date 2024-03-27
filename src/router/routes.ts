@@ -3,9 +3,30 @@ import HomeView from "@/views/HomeView.vue";
 import AdminView from "@/views/AdminView.vue";
 import AuthDeniedView from "@/views/AuthDeniedView.vue";
 import AUTH_ENUM from "@/auth/authEnum";
+import LoginView from "@/views/user/LoginView.vue";
+import RegisterView from "@/views/user/RegisterView.vue";
+import UserLayout from "@/layouts/UserLayout.vue";
 
 // 提取抽象出通用路由文件
 export const routes: Array<RouteRecordRaw> = [
+  {
+    // vue-router 子路由机制，通过嵌套路由共用布局样式
+    path: "/user",
+    name: "user",
+    component: UserLayout,
+    children: [
+      {
+        path: "/user/login",
+        name: "Login",
+        component: LoginView,
+      },
+      {
+        path: "/user/register",
+        name: "Register",
+        component: RegisterView,
+      },
+    ],
+  },
   {
     path: "/",
     name: "Problems",
