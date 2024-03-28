@@ -1,6 +1,13 @@
 <template>
   <div class="loginView">
-    <a-form :model="form" :style="{ width: '600px' }" @submit="handleSubmit">
+    <h2 style="margin-bottom: 16px">LOGIN</h2>
+    <a-form
+      style="max-width: 500px; margin: 0 auto"
+      label-align="left"
+      auto-label-width
+      :model="form"
+      @submit="handleSubmit"
+    >
       <a-form-item field="userAccount" label="Username">
         <a-input
           v-model="form.userAccount"
@@ -14,7 +21,9 @@
         />
       </a-form-item>
       <a-form-item>
-        <a-button html-type="submit">Submit</a-button>
+        <a-button type="primary" html-type="submit" style="width: 100px"
+          >LOG IN</a-button
+        >
       </a-form-item>
     </a-form>
   </div>

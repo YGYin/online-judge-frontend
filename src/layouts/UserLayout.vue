@@ -1,7 +1,12 @@
 <template>
   <div id="userLayout">
     <a-layout style="min-height: 100vh">
-      <a-layout-header class="header">User Layout</a-layout-header>
+      <a-layout-header class="header">
+        <a-space>
+          <img src="../assets/logo.png" class="logo" />
+          <div>YG OJ</div>
+        </a-space>
+      </a-layout-header>
       <a-layout-content class="content">
         <router-view />
       </a-layout-content>
@@ -12,23 +17,27 @@
   </div>
 </template>
 
+<!--to add background in UserLayout.vue #userLayout { background: url("...") 0% 0% / 100% 100%;}-->
 <style scoped>
 #userLayout {
+  text-align: center;
+}
+
+#userLayout .logo {
+  width: 64px;
+  height: 64px;
 }
 
 #userLayout .header {
-  margin-bottom: 16px;
-  box-shadow: #eee 1px 1px 5px;
+  margin-top: 16px;
 }
 
 #userLayout .content {
-  background: linear-gradient(to right, #aaa, #fff);
   margin-bottom: 16px;
   padding: 20px;
 }
 
 #userLayout .footer {
-  background: #efefef;
   padding: 16px;
   position: sticky;
   bottom: 0;
