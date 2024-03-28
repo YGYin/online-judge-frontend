@@ -26,6 +26,9 @@ export const routes: Array<RouteRecordRaw> = [
         component: RegisterView,
       },
     ],
+    meta: {
+      isHide: true,
+    },
   },
   {
     path: "/",
