@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
+import HomeView from "@/views/SampleView.vue";
 import AdminView from "@/views/AdminView.vue";
 import AuthDeniedView from "@/views/AuthDeniedView.vue";
 import AUTH_ENUM from "@/auth/authEnum";
