@@ -1,5 +1,10 @@
 <template>
-  <Editor :value="value" :plugins="plugins" @change="handleChange" />
+  <Editor
+    :value="value"
+    :mode="mode"
+    :plugins="plugins"
+    @change="handleChange"
+  />
 </template>
 
 <script setup lang="ts">
@@ -12,6 +17,7 @@ import { ref, withDefaults, defineProps } from "vue";
 // 让父级控制 editor 内部的 value 和 handleChange
 interface Properties {
   value: string;
+  mode?: string;
   handleChange: (val: string) => void;
 }
 
@@ -25,10 +31,15 @@ const plugins = [
 // 给组件指定初始值
 const properties = withDefaults(defineProps<Properties>(), {
   value: () => "",
+  mode: () => "split",
   handleChange: (val: string) => {
     console.log(val);
   },
 });
 </script>
 
-<style scoped></style>
+<style>
+.bytemd-toolbar-icon.bytemd-tippy.bytemd-tippy-right:last-child {
+  display: none;
+}
+</style>

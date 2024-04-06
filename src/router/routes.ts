@@ -6,6 +6,7 @@ import AUTH_ENUM from "@/auth/authEnum";
 import LoginView from "@/views/user/LoginView.vue";
 import RegisterView from "@/views/user/RegisterView.vue";
 import UserLayout from "@/layouts/UserLayout.vue";
+import AddProblemView from "@/views/problem/AddProblemView.vue";
 
 // 提取抽象出通用路由文件
 export const routes: Array<RouteRecordRaw> = [
@@ -34,6 +35,14 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Problems",
     component: HomeView,
+  },
+  {
+    path: "/add/problem",
+    name: "Add Problems",
+    component: AddProblemView,
+    meta: {
+      access: AUTH_ENUM.ADMIN,
+    },
   },
   {
     path: "/hidePage",

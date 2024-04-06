@@ -8,7 +8,7 @@
         <router-view />
       </a-layout-content>
       <a-layout-footer class="footer">
-        <a href="https://www.example.com" target="_blank"> YG's Page </a>
+        <a href="https://github.com/YGYin" target="_blank"> YG's Page </a>
       </a-layout-footer>
     </a-layout>
   </div>
@@ -24,7 +24,7 @@
 }
 
 #commonLayout .content {
-  background: linear-gradient(to right, #aaa, #fff);
+  background: linear-gradient(to right, #fefefe, #fff);
   margin-bottom: 16px;
   padding: 20px;
 }
