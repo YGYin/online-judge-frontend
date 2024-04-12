@@ -36,7 +36,7 @@ const show = ref(true);
 const dbDataList = ref([]);
 const totalNum = ref(0);
 const searchConfig = ref({
-  pageSize: 1,
+  pageSize: 10,
   current: 1,
 });
 
