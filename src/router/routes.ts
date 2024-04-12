@@ -8,6 +8,8 @@ import RegisterView from "@/views/user/RegisterView.vue";
 import UserLayout from "@/layouts/UserLayout.vue";
 import AddProblemView from "@/views/problem/AddProblemView.vue";
 import ManageProblemView from "@/views/problem/ManageProblemView.vue";
+import ProblemsView from "@/views/problem/ProblemsView.vue";
+import BrowseProblemView from "@/views/problem/BrowseProblemView.vue";
 
 // 提取抽象出通用路由文件
 export const routes: Array<RouteRecordRaw> = [
@@ -34,8 +36,23 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/",
+    name: "Homepage",
+    component: ProblemsView,
+  },
+  {
+    path: "/problems",
     name: "Problems",
-    component: HomeView,
+    component: ProblemsView,
+  },
+  {
+    path: "/view/problem/:id",
+    name: "View Problem",
+    component: BrowseProblemView,
+    props: true,
+    meta: {
+      access: AUTH_ENUM.USER,
+      isHide: true,
+    },
   },
   {
     path: "/add/problem",
