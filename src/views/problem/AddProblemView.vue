@@ -108,20 +108,25 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import MdEditor from "@/components/MdEditor.vue";
 import { ProblemControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
+import { useRoute } from "vue-router";
 
-const form = reactive({
-  title: "A + B",
-  content: "测试题目内容",
-  res: "尝试暴力破解",
-  tags: ["栈", "简单"],
+// 若页面地址中包含 update 则为题目更新页面
+const route = useRoute();
+const updatePage = route.path.includes("update");
+
+let form = ref({
+  title: "",
+  content: "",
+  res: "",
+  tags: [],
   testCase: [
     {
-      input: "1 2",
-      output: "3 4",
+      input: "",
+      output: "",
     },
   ],
   testConfig: {
@@ -131,34 +136,93 @@ const form = reactive({
   },
 });
 
+const loadData = async () => {
+  // 通过请求参数获取 id
+  const id = route.query.id;
+  // id 不存在直接结束请求
+  if (!id) return;
+  const result = await ProblemControllerService.getProblemByIdUsingGet(
+    id as any
+  );
+  if (result.code === 0) {
+    form.value = result.data as any;
+    // 使用了 ref 动态，需要判断是否有变量为空
+    if (!form.value.testConfig) {
+      form.value.testConfig = {
+        memLimit: 1000,
+        stackLimit: 1000,
+        timeLimit: 1000,
+      };
+    } else {
+      // 将 json 转换为对应的 json 对象
+      form.value.testConfig = JSON.parse(form.value.testConfig as any);
+    }
+    if (!form.value.testCase) {
+      form.value.testCase = [
+        {
+          input: "",
+          output: "",
+        },
+      ];
+    } else {
+      form.value.testCase = JSON.parse(form.value.testCase as any);
+    }
+    if (!form.value.tags) {
+      form.value.tags = [];
+    } else {
+      form.value.tags = JSON.parse(form.value.tags as any);
+    }
+  } else {
+    message.error("题目加载失败，" + result.message);
+  }
+};
+
+// update 页面加载时请求 loadData()
+onMounted(() => {
+  loadData();
+});
+
 const addProblemSubmit = async () => {
   // 将 add 请求发送给后端
   console.log(form);
-  const res = await ProblemControllerService.addProblemUsingPost(form);
-  // 正常传输
-  if (res.code === 0) {
-    message.success("题目创建成功");
+  // 提交前先判断当前页面是否为更新页面，用于区分更新题目和创建题目
+  if (updatePage) {
+    const res = await ProblemControllerService.updateProblemUsingPost(
+      form.value
+    );
+    // 正常传输
+    if (res.code === 0) {
+      message.success("题目更新成功");
+    } else {
+      message.error("题目更新失败", res.message);
+    }
   } else {
-    message.error("题目创建失败", res.message);
+    const res = await ProblemControllerService.addProblemUsingPost(form.value);
+    // 正常传输
+    if (res.code === 0) {
+      message.success("题目创建成功");
+    } else {
+      message.error("题目创建失败", res.message);
+    }
   }
 };
 
 const handleAdd = () => {
-  form.testCase.push({
+  form.value.testCase.push({
     input: "",
     output: "",
   });
 };
 const handleDelete = (index: number) => {
-  form.testCase.splice(index, 1);
+  form.value.testCase.splice(index, 1);
 };
 
 const onContentChange = (val: string) => {
-  form.content = val;
+  form.value.content = val;
 };
 
 const onResChange = (val: string) => {
-  form.res = val;
+  form.value.res = val;
 };
 </script>
 
