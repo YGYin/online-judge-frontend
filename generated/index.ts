@@ -69,6 +69,5 @@ export { PostControllerService } from './services/PostControllerService';
 export { PostFavourControllerService } from './services/PostFavourControllerService';
 export { PostThumbControllerService } from './services/PostThumbControllerService';
 export { ProblemControllerService } from './services/ProblemControllerService';
-export { ProblemSubmitControllerService } from './services/ProblemSubmitControllerService';
 export { UserControllerService } from './services/UserControllerService';
 export { WxMpControllerService } from './services/WxMpControllerService';

@@ -5,6 +5,7 @@
 import type { BaseResponse_boolean_ } from '../models/BaseResponse_boolean_';
 import type { BaseResponse_long_ } from '../models/BaseResponse_long_';
 import type { BaseResponse_Page_Problem_ } from '../models/BaseResponse_Page_Problem_';
+import type { BaseResponse_Page_ProblemSubmitVO_ } from '../models/BaseResponse_Page_ProblemSubmitVO_';
 import type { BaseResponse_Page_ProblemVO_ } from '../models/BaseResponse_Page_ProblemVO_';
 import type { BaseResponse_Problem_ } from '../models/BaseResponse_Problem_';
 import type { BaseResponse_ProblemVO_ } from '../models/BaseResponse_ProblemVO_';
@@ -12,6 +13,8 @@ import type { DeleteRequest } from '../models/DeleteRequest';
 import type { ProblemAddRequest } from '../models/ProblemAddRequest';
 import type { ProblemEditRequest } from '../models/ProblemEditRequest';
 import type { ProblemQueryRequest } from '../models/ProblemQueryRequest';
+import type { ProblemSubmitAddRequest } from '../models/ProblemSubmitAddRequest';
+import type { ProblemSubmitQueryRequest } from '../models/ProblemSubmitQueryRequest';
 import type { ProblemUpdateRequest } from '../models/ProblemUpdateRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -180,6 +183,48 @@ export class ProblemControllerService {
             method: 'POST',
             url: '/api/problem/my/list/page/vo',
             body: problemQueryRequest,
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+    /**
+     * doProblemSubmit
+     * @param problemSubmitAddRequest problemSubmitAddRequest
+     * @returns BaseResponse_long_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static doProblemSubmitUsingPost(
+        problemSubmitAddRequest: ProblemSubmitAddRequest,
+    ): CancelablePromise<BaseResponse_long_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/problem/problem_submit/do',
+            body: problemSubmitAddRequest,
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+    /**
+     * listProblemSubmitByPage
+     * @param problemSubmitQueryRequest problemSubmitQueryRequest
+     * @returns BaseResponse_Page_ProblemSubmitVO_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static listProblemSubmitByPageUsingPost(
+        problemSubmitQueryRequest: ProblemSubmitQueryRequest,
+    ): CancelablePromise<BaseResponse_Page_ProblemSubmitVO_ | any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/problem/problem_submit/list/page',
+            body: problemSubmitQueryRequest,
             errors: {
                 401: `Unauthorized`,
                 403: `Forbidden`,
