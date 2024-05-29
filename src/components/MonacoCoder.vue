@@ -31,18 +31,18 @@ const properties = withDefaults(defineProps<Properties>(), {
 const monacoCoderRef = ref();
 const monacoCoder = ref();
 
-// watch([properties.language], () => {
-//   monacoCoder.value = monaco.editor.create(monacoCoderRef.value, {
-//     value: properties.value,
-//     language: properties.language,
-//     minimap: {
-//       enabled: true,
-//     },
-//     automaticLayout: true,
-//     readOnly: false,
-//     theme: "vs-dark",
-//   });
-// });
+watch(
+  () => properties.language,
+  () => {
+    // 判断编辑器实例是否有初始化
+    if (monacoCoder.value) {
+      monaco.editor.setModelLanguage(
+        toRaw(monacoCoder.value).getModel(),
+        properties.language
+      );
+    }
+  }
+);
 
 // 初始化时执行
 onMounted(() => {
