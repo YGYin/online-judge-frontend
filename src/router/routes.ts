@@ -9,6 +9,7 @@ import UserLayout from "@/layouts/UserLayout.vue";
 import AddProblemView from "@/views/problem/AddProblemView.vue";
 import ManageProblemView from "@/views/problem/ManageProblemView.vue";
 import ProblemsView from "@/views/problem/ProblemsView.vue";
+import ProblemSubmitView from "@/views/problem/ProblemSubmitView.vue";
 import BrowseProblemView from "@/views/problem/BrowseProblemView.vue";
 
 // 提取抽象出通用路由文件
@@ -43,6 +44,11 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/problems",
     name: "Problems",
     component: ProblemsView,
+  },
+  {
+    path: "/problem_submit",
+    name: "Submitted",
+    component: ProblemSubmitView,
   },
   {
     path: "/view/problem/:id",
