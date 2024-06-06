@@ -38,9 +38,9 @@
       </template>
       <template #acRate="{ record }">
         {{
-          `${record.submitNum ? record.acNum / record.submitNum : "0"}% (${
-            record.acNum
-          } / ${record.submitNum})`
+          `${
+            record.submitNum ? (record.acNum / record.submitNum) * 100 : "0"
+          }% (${record.acNum} / ${record.submitNum})`
         }}
       </template>
       <template #createTime="{ record }">
@@ -159,6 +159,7 @@ const doSearch = () => {
   max-width: 1280px;
   margin: 0 auto;
 }
+
 #problemsView .arco-space-horizontal .arco-space-item {
   margin-bottom: 0 !important;
 }
